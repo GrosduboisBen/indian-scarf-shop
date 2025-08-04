@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { login, register } from '@/data/auth';
 
@@ -15,17 +16,17 @@ export default function LoginForm() {
         : await login(userId, password);
 
       localStorage.setItem('token', data.token);
-      console.log('Connexion réussie, token :', data.token);
-      // Rediriger ou mettre à jour l'état de l'app
+      console.log('Login successful, token:', data.token);
+      // Redirect or update app state
     } catch (err: any) {
       console.error(err);
-      setError(err.response?.data?.message || 'Erreur serveur');
+      setError(err.response?.data?.message || 'Server error');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: '0 auto' }}>
-      <h2>{isRegistering ? 'Créer un compte' : 'Se connecter'}</h2>
+      <h2>{isRegistering ? 'Create an account' : 'Sign in'}</h2>
 
       <input
         type="text"
@@ -37,22 +38,22 @@ export default function LoginForm() {
 
       <input
         type="password"
-        placeholder="Mot de passe"
+        placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
 
       <button type="submit">
-        {isRegistering ? 'S’inscrire' : 'Se connecter'}
+        {isRegistering ? 'Sign up' : 'Sign in'}
       </button>
 
       <p style={{ color: 'red' }}>{error}</p>
 
       <p>
-        {isRegistering ? 'Déjà un compte ?' : 'Pas encore de compte ?'}{' '}
+        {isRegistering ? 'Already have an account?' : 'Don’t have an account yet?'}{' '}
         <button type="button" onClick={() => setIsRegistering(!isRegistering)}>
-          {isRegistering ? 'Connexion' : 'Créer un compte'}
+          {isRegistering ? 'Sign in' : 'Create an account'}
         </button>
       </p>
     </form>
